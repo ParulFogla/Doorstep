@@ -1,14 +1,15 @@
 <?php
-   include('session.php');
-   
+   include('session2.php');
 ?>
+
 <!DOCTYPE HTML>
 <html>
 <head>
-
 <title>DoorStep:Make Your Life Comfort</title>
 <link rel = "icon" href = "logo1.png" type = "image/x-icon"> 
 <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!-- Custom Theme files -->
 <link href="css/style.css" rel='stylesheet' type='text/css' />
@@ -52,31 +53,24 @@
 			    });
             </script>
 
-              <style> 
-            table, td { 
+            <style>
+            	 table, td ,th { 
                 border: 2px; 
                 text-align:center; 
             } 
-             td { 
+             td, th { 
                 padding: 20px; 
                 background-color:none; 
             } 
-            input, textarea{
-            	border-radius: 5px;
-            	box-shadow: 5px 5px 5px 5px grey;
+             #mytype{
 
-            }
-            #mytype{
-
-  				height: 200px;
+  				height: 50%;
   				width: 100%
   				padding: 15px;
- 				background-color:  #e6b3ff;
+ 				background-color: #e6b3ff;
   				box-shadow: 10px 10px 10px 10px grey;
             }
-              
-             
-        </style> 	
+            </style>	
 </head>
 <body>
 	<div class="men_banner">
@@ -87,63 +81,65 @@
 	   <div class="menu">
 	   	<h4 style="color:white">Welcome <?php echo $login_session; ?></h4>
 	     <ul class="megamenu skyblue">
-	     	<li class="active grid" style="color: white"><a href = "prev.php">Previous Orders</a></li>
+	     	<li class="active grid" style="color: white"><a href = "staff.php">Home</a></li>
 	     	<li class="active grid" style="color: white"><a href = "logout.php">Sign Out</a></li></ul>
-		
-     <div class="clearfix"> </div>
+		     <div class="clearfix"> </div>
 	</div>
     </div>
    </div>
-   <br>
-   <br>
-   <br>
-   <div><h1 align="center">New Services</h1></div>
-<section align:"center">
-  <img class="mySlides" src="Tutor_banner.png"
-  style="width:100%">
+   
+   
+<?php
+$Query="select ocat,odet,ostore,oquan from orders where sid='$login_id'";
+$Subject=mysqli_query($link,$Query);
+$i=-1;
 
-  <img class="mySlides" src="Movers_banner.jpeg"
-  style="width:100%">
-</section>
+while($row = mysqli_fetch_array($Subject))
+{
+    $i++;
 
-<script>
-var myIndex = 0;
-carousel();
+    $Code[$i]['ocat']=$row['ocat'];
+    $Code[$i]['odet']=$row['odet'];
+    $Code[$i]['ostore']=$row['ostore'];
+    $Code[$i]['oquan']=$row['oquan'];
 
-function carousel() {
-    var i;
-    var x = document.getElementsByClassName("mySlides");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";
-    }
-    myIndex++;
-    if (myIndex > x.length) {myIndex = 1}
-    x[myIndex-1].style.display = "block";
-    setTimeout(carousel, 2000);
 }
-</script>
-<!-- databse connection part-->
-<br/>
-<br/>
+$j=0;
+$k=0;
+?>
+<br>
+<br>
 
-<div  id="mytype">
-	<br>
-<center><h1 style="text-shadow: 3px 1px grey;">Place an order or Request a service here</h1>
-<table>
-<form action="place.php" method="post">
-	<tr><td><input type="text" id="service" name="service"  placeholder="Type of Service"></td>
-	<!--<td><input type="text" name="details" id="details" placeholder="Details"></td>-->
-	<td><input type="text" id="store" name="store"  placeholder="Store"></td>
-	<td><input type="number" id="quantity" name="quantity" placeholder="Quantity"></td>
-	<td><br><textarea rows = "2" cols = "30" id="details" name = "details"  placeholder="Enter Details"></textarea></td>
-	<td><input type="submit" name="Submit" value="submit"></td></tr>
+<!-- card -->
+<div class="container" >
+	<h1 style="text-shadow: 3px 1px grey;">Recent Order</h1>
+
+	<div class="row mx-2">
+
+	<?php while ( $j <= $i) { $k++; ?>
+		<div class="card col-lg-6 col-md-6">
+			<div class="card-header bg-dark text-white">
+				Order Number : <?php echo $k; ?>
+			</div>
+			<div class="card-body">
+			Order Category : <?php echo $Code[$j]['ocat']; ?><br/>
+			Order Details : <?php echo $Code[$j]['odet']; ?><br/>
+			Order Store : <?php echo $Code[$j]['ostore']; ?><br/>
+			Order Quantity : <?php echo $Code[$j]['oquan']; ?><br/>
+			
+			</div>
+		</div>
+		<?php $j++; } ?>
+	</div>
 	
-</form>
-
-</table></center>
-
-
 </div>
+
+<!-- card -->
+
+
+
+
+
    <div class="footer">
    	 <div class="container">
    		<div class="cssmenu">
@@ -164,5 +160,9 @@ function carousel() {
 	   
    	</div>
    </div>
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </body>
 </html>		
