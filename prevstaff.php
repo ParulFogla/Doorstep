@@ -112,7 +112,7 @@ $k=0;
 
 <!-- card -->
 <div class="container" >
-	<h1 style="text-shadow: 3px 1px grey;">Recent Order</h1>
+	<h1 style="text-shadow: 3px 1px grey;">Order History</h1>
 
 	<div class="row mx-2">
 
